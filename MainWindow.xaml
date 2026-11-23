@@ -17,25 +17,84 @@
         <ListBox Grid.Row="1" x:Name="ListaTarefas" HorizontalContentAlignment="Stretch">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <DockPanel Margin="0,2">
-                        <Button DockPanel.Dock="Right" Content="✕" Padding="6,0"
-                                Tag="{Binding}" Click="BtnApagar_Click"/>
-                        <CheckBox x:Name="chk" IsChecked="{Binding Feito}" Click="Chk_Click"
-                                  VerticalContentAlignment="Center">
-                            <TextBlock Text="{Binding Texto}" TextWrapping="Wrap">
-                                <TextBlock.Style>
-                                    <Style TargetType="TextBlock">
+                    <StackPanel Margin="0,2">
+                        <DockPanel>
+                            <Button DockPanel.Dock="Right" Content="✕" Padding="6,0"
+                                    Tag="{Binding}" Click="BtnApagar_Click"/>
+                            <ToggleButton x:Name="tgl" DockPanel.Dock="Left" Width="22" Margin="0,0,6,0"
+                                          Background="Transparent" BorderThickness="0"
+                                          IsChecked="{Binding Expandida}" Click="Chk_Click">
+                                <ToggleButton.Style>
+                                    <Style TargetType="ToggleButton">
+                                        <Setter Property="Content" Value="▸"/>
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=chk}" Value="True">
-                                                <Setter Property="TextDecorations" Value="Strikethrough"/>
-                                                <Setter Property="Opacity" Value="0.5"/>
-                                            </DataTrigger>
+                                            <Trigger Property="IsChecked" Value="True">
+                                                <Setter Property="Content" Value="▾"/>
+                                            </Trigger>
                                         </Style.Triggers>
                                     </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                        </CheckBox>
-                    </DockPanel>
+                                </ToggleButton.Style>
+                            </ToggleButton>
+                            <CheckBox x:Name="chk" IsChecked="{Binding Feito}" Click="Chk_Click"
+                                      VerticalContentAlignment="Center">
+                                <TextBlock Text="{Binding Texto}" TextWrapping="Wrap">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsChecked, ElementName=chk}" Value="True">
+                                                    <Setter Property="TextDecorations" Value="Strikethrough"/>
+                                                    <Setter Property="Opacity" Value="0.5"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </CheckBox>
+                        </DockPanel>
+
+                        <StackPanel Margin="28,2,0,4">
+                            <StackPanel.Style>
+                                <Style TargetType="StackPanel">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsChecked, ElementName=tgl}" Value="True">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </StackPanel.Style>
+
+                            <ItemsControl ItemsSource="{Binding Subtarefas}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <DockPanel Margin="0,1">
+                                            <Button DockPanel.Dock="Right" Content="✕" Padding="5,0"
+                                                    Tag="{Binding}" Click="BtnApagarSub_Click"/>
+                                            <CheckBox x:Name="chkSub" IsChecked="{Binding Feito}" Click="Chk_Click"
+                                                      VerticalContentAlignment="Center">
+                                                <TextBlock Text="{Binding Texto}" TextWrapping="Wrap">
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="TextBlock">
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding IsChecked, ElementName=chkSub}" Value="True">
+                                                                    <Setter Property="TextDecorations" Value="Strikethrough"/>
+                                                                    <Setter Property="Opacity" Value="0.5"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+                                            </CheckBox>
+                                        </DockPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+
+                            <TextBox Tag="{Binding}" Padding="3" Margin="0,4,0,0"
+                                     ToolTip="Digite e aperte Enter para adicionar uma subtarefa"
+                                     KeyDown="TxtSub_KeyDown"/>
+                        </StackPanel>
+                    </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>

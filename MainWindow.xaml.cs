@@ -3,13 +3,22 @@ using System.IO;
 using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace Lembretes;
+
+public class Subtarefa
+{
+    public string Texto { get; set; } = "";
+    public bool Feito { get; set; }
+}
 
 public class Tarefa
 {
     public string Texto { get; set; } = "";
     public bool Feito { get; set; }
+    public bool Expandida { get; set; }
+    public ObservableCollection<Subtarefa> Subtarefas { get; set; } = new();
 }
 
 public partial class MainWindow : Window
@@ -69,5 +78,32 @@ public partial class MainWindow : Window
         }
     }
 
+    private void BtnApagarSub_Click(object sender, RoutedEventArgs e)
+    {
+        if (((Button)sender).Tag is Subtarefa sub)
+        {
+            foreach (var t in tarefas)
+            {
+                if (t.Subtarefas.Remove(sub)) break;
+            }
+            Salvar();
+        }
+    }
+
+    private void TxtSub_KeyDown(object sender, KeyEventArgs e)
+    {
+        if (e.Key != Key.Enter) return;
+        e.Handled = true; // impede que o Enter também clique no botão "Adicionar"
+
+        var caixa = (TextBox)sender;
+        var texto = caixa.Text.Trim();
+        if (texto == "" || caixa.Tag is not Tarefa pai) return;
+
+        pai.Subtarefas.Add(new Subtarefa { Texto = texto });
+        caixa.Clear();
+        Salvar();
+    }
+
+    // Usado pelas caixinhas de marcar e pela setinha: qualquer mudança salva.
     private void Chk_Click(object sender, RoutedEventArgs e) => Salvar();
 }
