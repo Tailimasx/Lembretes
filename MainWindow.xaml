@@ -20,7 +20,7 @@
                     <DockPanel Margin="0,2">
                         <Button DockPanel.Dock="Right" Content="✕" Padding="6,0"
                                 Tag="{Binding}" Click="BtnApagar_Click"/>
-                        <CheckBox x:Name="chk" IsChecked="{Binding Feito}"
+                        <CheckBox x:Name="chk" IsChecked="{Binding Feito}" Click="Chk_Click"
                                   VerticalContentAlignment="Center">
                             <TextBlock Text="{Binding Texto}" TextWrapping="Wrap">
                                 <TextBlock.Style>
