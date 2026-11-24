@@ -4,6 +4,7 @@ using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Globalization;
 
 namespace Lembretes;
 
@@ -32,6 +33,10 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
+        TxtData.Text = DateTime.Now.ToString("dddd, d 'de' MMMM", new CultureInfo("pt-BR"));
+        var area = SystemParameters.WorkArea;
+        Left = area.Right - Width - 4;
+        Top = area.Bottom - Height - 4;
         Carregar();
         ListaTarefas.ItemsSource = tarefas;
     }
@@ -105,5 +110,18 @@ public partial class MainWindow : Window
     }
 
     // Usado pelas caixinhas de marcar e pela setinha: qualquer mudança salva.
+
     private void Chk_Click(object sender, RoutedEventArgs e) => Salvar();
+
+    private void BtnFechar_Click(object sender, RoutedEventArgs e) => Close();
+
+    private void Cabecalho_MouseDown(object sender, MouseButtonEventArgs e) => DragMove();
+
+        private void TxtNovo_KeyDown(object sender, KeyEventArgs e)
+    {
+        if (e.Key != Key.Enter) return;
+        e.Handled = true;
+        BtnAdicionar_Click(sender, e);
+    }
+
 }
