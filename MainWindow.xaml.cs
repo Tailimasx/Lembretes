@@ -76,6 +76,8 @@ public partial class MainWindow : Window
 
         Carregar();                           // lê o arquivo salvo
         ListaTarefas.ItemsSource = tarefas;   // liga a lista da tela às tarefas
+
+        AtualizarResumo();   // mostra "X de Y" e a barra assim que o app abre
     }
 
     // SALVAR E CARREGAR (JSON)
@@ -102,6 +104,29 @@ public partial class MainWindow : Window
         Directory.CreateDirectory(PastaApp);   // cria a pasta se ainda não existir
         var json = JsonSerializer.Serialize(tarefas, new JsonSerializerOptions { WriteIndented = true });
         File.WriteAllText(ArquivoDados, json);
+                AtualizarResumo();   // toda mudança passa por aqui, então o resumo sempre fica em dia
+    }
+
+        // Atualiza o "2 de 5", a barra de progresso e o "3 pendentes".
+    private void AtualizarResumo()
+    {
+        int total = tarefas.Count;
+        int feitas = tarefas.Count(t => t.Feito);   // quantas estão marcadas
+        int pendentes = total - feitas;
+
+        TxtProgresso.Text = $"{feitas} de {total}";
+        TxtPendentes.Text = pendentes == 1 ? "1 pendente" : $"{pendentes} pendentes";
+
+        // Fração de 0 a 1 (cuidado: dividir por zero se não houver tarefas)
+        double fracao = total == 0 ? 0 : (double)feitas / total;
+
+        // Em vez de pular, a barra desliza até o novo valor em 0,35s
+        BarraProgresso.BeginAnimation(RangeBase.ValueProperty, new DoubleAnimation
+        {
+            To = fracao,
+            Duration = TimeSpan.FromMilliseconds(350),
+            EasingFunction = new CubicEase { EasingMode = EasingMode.EaseOut }
+        });
     }
 
     // ADICIONAR
@@ -340,7 +365,7 @@ public partial class MainWindow : Window
             c.Opacity = valor;
     }
 
-    
+
 
     // OUTROS
 
