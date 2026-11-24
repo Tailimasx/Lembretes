@@ -8,6 +8,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
+using System.Windows.Controls.Primitives;
+using System.Windows.Media;
 
 namespace Lembretes;
 
@@ -245,6 +247,100 @@ public partial class MainWindow : Window
             Salvar();
         });
     }
+
+    // ARRASTAR PARA MUDAR A ORDEM DAS TAREFAS
+
+    private Point inicioArraste;        // onde o mouse foi pressionado
+    private Tarefa? tarefaCandidata;    // tarefa sob o mouse; só vira "arraste" se o mouse se mover
+
+    //devolve o "pai" de um elemento da tela (funciona para elementos visuais e para textos soltos).
+    private static DependencyObject? Pai(DependencyObject o)
+        => o is Visual ? VisualTreeHelper.GetParent(o) : LogicalTreeHelper.GetParent(o);
+
+    // 1) Mouse pressionado: descobre se foi sobre uma tarefa (e não sobre um campo ou botão).
+    private void Lista_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+    {
+        tarefaCandidata = null;
+
+        // Sobe na árvore visual a partir do ponto clicado até achar o item da lista.
+        var atual = e.OriginalSource as DependencyObject;
+        while (atual != null && atual is not ListBoxItem)
+        {
+            // Clique em campo de texto, botão ou caixinha NÃO é arraste (é edição/clique normal).
+            if (atual is TextBoxBase || atual is ButtonBase) return;
+            atual = Pai(atual);
+        }
+
+        if (atual is ListBoxItem item && item.DataContext is Tarefa tarefa)
+        {
+            tarefaCandidata = tarefa;
+            inicioArraste = e.GetPosition(null);
+        }
+    }
+
+    // 2) Mouse se movendo com o botão pressionado: começa o arraste.
+    private void Lista_PreviewMouseMove(object sender, MouseEventArgs e)
+    {
+        if (e.LeftButton != MouseButtonState.Pressed || tarefaCandidata == null) return;
+
+        // Só começa depois de mover alguns pixels (evita arrastar sem querer ao clicar).
+        var delta = e.GetPosition(null) - inicioArraste;
+        if (Math.Abs(delta.X) < SystemParameters.MinimumHorizontalDragDistance &&
+            Math.Abs(delta.Y) < SystemParameters.MinimumVerticalDragDistance) return;
+
+        var tarefa = tarefaCandidata;
+        tarefaCandidata = null;
+
+        DefinirOpacidade(tarefa, 0.45);   // deixa o item meio "fantasma" enquanto arrasta
+        // DoDragDrop fica "preso" aqui até você soltar o mouse.
+        DragDrop.DoDragDrop(ListaTarefas, new DataObject(typeof(Tarefa), tarefa), DragDropEffects.Move);
+        DefinirOpacidade(tarefa, 1);
+        Salvar();                         // grava a ordem final
+    }
+
+    // 3) Durante o arraste: reorganiza a lista ao vivo conforme a posição do mouse.
+    private void Lista_DragOver(object sender, DragEventArgs e)
+    {
+        e.Handled = true;
+
+        if (e.Data.GetData(typeof(Tarefa)) is not Tarefa arrastada)
+        {
+            e.Effects = DragDropEffects.None;   // não é uma tarefa: não aceita
+            return;
+        }
+        e.Effects = DragDropEffects.Move;
+
+        var posicao = e.GetPosition(ListaTarefas);
+
+        // Conta quantas outras tarefas têm o "meio" acima do mouse.
+        // Esse número é a posição onde a tarefa arrastada deve ficar.
+        int novoIndice = 0;
+        foreach (var t in tarefas)
+        {
+            if (t == arrastada) continue;
+            if (ListaTarefas.ItemContainerGenerator.ContainerFromItem(t) is not FrameworkElement c) continue;
+
+            double topo = c.TransformToAncestor(ListaTarefas).Transform(new Point(0, 0)).Y;
+            if (posicao.Y > topo + c.ActualHeight / 2) novoIndice++;
+        }
+
+        int atual = tarefas.IndexOf(arrastada);
+        if (atual >= 0 && novoIndice != atual)
+        {
+            tarefas.Move(atual, novoIndice);   // troca de lugar na lista
+            ListaTarefas.UpdateLayout();       // atualiza a tela já, para a próxima conta usar posições novas
+            DefinirOpacidade(arrastada, 0.45); // o "recipiente" pode ter sido recriado: reaplica o efeito
+        }
+    }
+
+    // Muda a transparência do recipiente visual de uma tarefa.
+    private void DefinirOpacidade(Tarefa t, double valor)
+    {
+        if (ListaTarefas.ItemContainerGenerator.ContainerFromItem(t) is UIElement c)
+            c.Opacity = valor;
+    }
+
+    
 
     // OUTROS
 

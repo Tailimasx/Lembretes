@@ -1,49 +1,81 @@
 ﻿<Window x:Class="Lembretes.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Lembretes" Width="399" Height="564"
+        Title="Lembretes"
+        Width="399"
+        Height="564"
         FontFamily="Segoe UI Variable Text, Segoe UI"
-        WindowStyle="None" AllowsTransparency="True" Background="Transparent"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
         ResizeMode="NoResize">
 
     <!-- cores e estilos para reaproveitar -->
     <Window.Resources>
 
-        
-        <SolidColorBrush x:Key="CorFundo" Color="#F0EDE4FA"/>        <!-- fundo do hub (94%) -->
-        <SolidColorBrush x:Key="CorBorda" Color="#D9FFFFFF"/>        <!-- traçado branco (85%) -->
-        <SolidColorBrush x:Key="CorTitulo" Color="#30233F"/>         <!-- textos principais -->
-        <SolidColorBrush x:Key="CorTextoSuave" Color="#73637F"/>     <!-- textos secundários -->
-        <SolidColorBrush x:Key="CorDestaque" Color="#684388"/>       <!-- roxo de destaque -->
-        <SolidColorBrush x:Key="CorCartao" Color="#8CFFFFFF"/>       <!-- cartão fechado -->
-        <SolidColorBrush x:Key="CorCartaoAberto" Color="#FAF5FF"/>   <!-- cartão aberto -->
-        <SolidColorBrush x:Key="CorLinha" Color="#D9C9E7"/>          <!-- bordas suaves -->
+
+        <SolidColorBrush x:Key="CorFundo"
+                         Color="#F0EDE4FA"/>
+        <!-- fundo do hub (94%) -->
+        <SolidColorBrush x:Key="CorBorda"
+                         Color="#D9FFFFFF"/>
+        <!-- traçado branco (85%) -->
+        <SolidColorBrush x:Key="CorTitulo"
+                         Color="#30233F"/>
+        <!-- textos principais -->
+        <SolidColorBrush x:Key="CorTextoSuave"
+                         Color="#73637F"/>
+        <!-- textos secundários -->
+        <SolidColorBrush x:Key="CorDestaque"
+                         Color="#684388"/>
+        <!-- roxo de destaque -->
+        <SolidColorBrush x:Key="CorCartao"
+                         Color="#8CFFFFFF"/>
+        <!-- cartão fechado -->
+        <SolidColorBrush x:Key="CorCartaoAberto"
+                         Color="#FAF5FF"/>
+        <!-- cartão aberto -->
+        <SolidColorBrush x:Key="CorLinha"
+                         Color="#D9C9E7"/>
+        <!-- bordas suaves -->
 
         <!-- barra de rolagem - scroll -->
         <Style TargetType="ScrollBar">
-            <Setter Property="Width" Value="8"/>
-            <Setter Property="MinWidth" Value="8"/>
-            <Setter Property="Margin" Value="4,0,0,0"/>
-            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Width"
+                    Value="8"/>
+            <Setter Property="MinWidth"
+                    Value="8"/>
+            <Setter Property="Margin"
+                    Value="4,0,0,0"/>
+            <Setter Property="Background"
+                    Value="Transparent"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="ScrollBar">
                         <Grid Background="Transparent">
-                            <Track x:Name="PART_Track" IsDirectionReversed="True">
+                            <Track x:Name="PART_Track"
+                                   IsDirectionReversed="True">
                                 <!-- áreas acima/abaixo da barrinha: invisíveis, mas clicáveis -->
                                 <Track.DecreaseRepeatButton>
-                                    <RepeatButton Command="ScrollBar.PageUpCommand" Opacity="0" Focusable="False"/>
+                                    <RepeatButton Command="ScrollBar.PageUpCommand"
+                                                  Opacity="0"
+                                                  Focusable="False"/>
                                 </Track.DecreaseRepeatButton>
                                 <Track.Thumb>
                                     <Thumb>
                                         <Thumb.Template>
                                             <ControlTemplate TargetType="Thumb">
-                                                <Border x:Name="barra" CornerRadius="4" Margin="2,0"
+                                                <Border x:Name="barra"
+                                                        CornerRadius="4"
+                                                        Margin="2,0"
                                                         Background="#80A190AE"/>
                                                 <ControlTemplate.Triggers>
                                                     <!-- escurece um pouco quando o mouse passa por cima -->
-                                                    <Trigger Property="IsMouseOver" Value="True">
-                                                        <Setter TargetName="barra" Property="Background" Value="#C0A190AE"/>
+                                                    <Trigger Property="IsMouseOver"
+                                                             Value="True">
+                                                        <Setter TargetName="barra"
+                                                                Property="Background"
+                                                                Value="#C0A190AE"/>
                                                     </Trigger>
                                                 </ControlTemplate.Triggers>
                                             </ControlTemplate>
@@ -51,7 +83,9 @@
                                     </Thumb>
                                 </Track.Thumb>
                                 <Track.IncreaseRepeatButton>
-                                    <RepeatButton Command="ScrollBar.PageDownCommand" Opacity="0" Focusable="False"/>
+                                    <RepeatButton Command="ScrollBar.PageDownCommand"
+                                                  Opacity="0"
+                                                  Focusable="False"/>
                                 </Track.IncreaseRepeatButton>
                             </Track>
                         </Grid>
@@ -61,22 +95,35 @@
         </Style>
 
         <!-- botão só com ícone - do windows 11 -->
-        <Style x:Key="BotaoIcone" TargetType="Button">
-            <Setter Property="FontFamily" Value="Segoe Fluent Icons, Segoe MDL2 Assets"/>
-            <Setter Property="FontSize" Value="16"/>
-            <Setter Property="Foreground" Value="{StaticResource CorTextoSuave}"/>
-            <Setter Property="Width" Value="32"/>
-            <Setter Property="Height" Value="32"/>
-            <Setter Property="Cursor" Value="Hand"/>
+        <Style x:Key="BotaoIcone"
+               TargetType="Button">
+            <Setter Property="FontFamily"
+                    Value="Segoe Fluent Icons, Segoe MDL2 Assets"/>
+            <Setter Property="FontSize"
+                    Value="16"/>
+            <Setter Property="Foreground"
+                    Value="{StaticResource CorTextoSuave}"/>
+            <Setter Property="Width"
+                    Value="32"/>
+            <Setter Property="Height"
+                    Value="32"/>
+            <Setter Property="Cursor"
+                    Value="Hand"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border x:Name="fundo" CornerRadius="8" Background="Transparent">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <Border x:Name="fundo"
+                                CornerRadius="8"
+                                Background="Transparent">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
                         </Border>
                         <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="fundo" Property="Background" Value="#22684388"/>
+                            <Trigger Property="IsMouseOver"
+                                     Value="True">
+                                <Setter TargetName="fundo"
+                                        Property="Background"
+                                        Value="#22684388"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -85,43 +132,68 @@
         </Style>
 
         <!-- setinha que abre/fecha as subtarefas -->
-        <Style x:Key="BotaoSetinha" TargetType="ToggleButton">
-            <Setter Property="FontFamily" Value="Segoe Fluent Icons, Segoe MDL2 Assets"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Foreground" Value="{StaticResource CorTextoSuave}"/>
-            <Setter Property="Width" Value="32"/>
-            <Setter Property="Height" Value="32"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="Content" Value="&#xE70D;"/>   <!-- seta para baixo -->
+        <Style x:Key="BotaoSetinha"
+               TargetType="ToggleButton">
+            <Setter Property="FontFamily"
+                    Value="Segoe Fluent Icons, Segoe MDL2 Assets"/>
+            <Setter Property="FontSize"
+                    Value="14"/>
+            <Setter Property="Foreground"
+                    Value="{StaticResource CorTextoSuave}"/>
+            <Setter Property="Width"
+                    Value="32"/>
+            <Setter Property="Height"
+                    Value="32"/>
+            <Setter Property="Cursor"
+                    Value="Hand"/>
+            <Setter Property="Content"
+                    Value="&#xE70D;"/>
+            <!-- seta para baixo -->
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="ToggleButton">
-                        <Border x:Name="fundo" CornerRadius="8" Background="Transparent">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <Border x:Name="fundo"
+                                CornerRadius="8"
+                                Background="Transparent">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
                         </Border>
                         <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="fundo" Property="Background" Value="#22684388"/>
+                            <Trigger Property="IsMouseOver"
+                                     Value="True">
+                                <Setter TargetName="fundo"
+                                        Property="Background"
+                                        Value="#22684388"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
             <Style.Triggers>
-                <Trigger Property="IsChecked" Value="True">
-                    <Setter Property="Content" Value="&#xE70E;"/>   <!-- seta para cima -->
+                <Trigger Property="IsChecked"
+                         Value="True">
+                    <Setter Property="Content"
+                            Value="&#xE70E;"/>
+                    <!-- seta para cima -->
                 </Trigger>
             </Style.Triggers>
         </Style>
 
         <!-- caixinha de marcar - marcação SOMENTE pela caixa  -->
-        <Style x:Key="CaixaMarcar" TargetType="CheckBox">
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
+        <Style x:Key="CaixaMarcar"
+               TargetType="CheckBox">
+            <Setter Property="Cursor"
+                    Value="Hand"/>
+            <Setter Property="VerticalAlignment"
+                    Value="Center"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="CheckBox">
-                        <Border x:Name="caixa" Width="20" Height="20" CornerRadius="6" BorderThickness="1.5">
+                        <Border x:Name="caixa"
+                                Width="20"
+                                Height="20"
+                                CornerRadius="6"
+                                BorderThickness="1.5">
                             <Border.Background>
                                 <SolidColorBrush Color="#80FFFFFF"/>
                             </Border.Background>
@@ -129,20 +201,34 @@
                                 <SolidColorBrush Color="#A190AE"/>
                             </Border.BorderBrush>
                             <!-- animação do tique -->
-                            <TextBlock x:Name="tique" Text="&#xE73E;" Opacity="0"
-                                       FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" FontSize="12"
+                            <TextBlock x:Name="tique"
+                                       Text="&#xE73E;"
+                                       Opacity="0"
+                                       FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
+                                       FontSize="12"
                                        Foreground="{StaticResource CorDestaque}"
-                                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"/>
                         </Border>
                         <ControlTemplate.Triggers>
-                            <Trigger Property="IsChecked" Value="True">
+                            <Trigger Property="IsChecked"
+                                     Value="True">
                                 <!-- ao marcar: cor muda e tique aparece em 0,18s -->
                                 <Trigger.EnterActions>
                                     <BeginStoryboard>
                                         <Storyboard>
-                                            <ColorAnimation Storyboard.TargetName="caixa" Storyboard.TargetProperty="Background.Color" To="#D2B9ED" Duration="0:0:0.18"/>
-                                            <ColorAnimation Storyboard.TargetName="caixa" Storyboard.TargetProperty="BorderBrush.Color" To="#D2B9ED" Duration="0:0:0.18"/>
-                                            <DoubleAnimation Storyboard.TargetName="tique" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.18"/>
+                                            <ColorAnimation Storyboard.TargetName="caixa"
+                                                            Storyboard.TargetProperty="Background.Color"
+                                                            To="#D2B9ED"
+                                                            Duration="0:0:0.18"/>
+                                            <ColorAnimation Storyboard.TargetName="caixa"
+                                                            Storyboard.TargetProperty="BorderBrush.Color"
+                                                            To="#D2B9ED"
+                                                            Duration="0:0:0.18"/>
+                                            <DoubleAnimation Storyboard.TargetName="tique"
+                                                             Storyboard.TargetProperty="Opacity"
+                                                             To="1"
+                                                             Duration="0:0:0.18"/>
                                         </Storyboard>
                                     </BeginStoryboard>
                                 </Trigger.EnterActions>
@@ -150,9 +236,18 @@
                                 <Trigger.ExitActions>
                                     <BeginStoryboard>
                                         <Storyboard>
-                                            <ColorAnimation Storyboard.TargetName="caixa" Storyboard.TargetProperty="Background.Color" To="#80FFFFFF" Duration="0:0:0.18"/>
-                                            <ColorAnimation Storyboard.TargetName="caixa" Storyboard.TargetProperty="BorderBrush.Color" To="#A190AE" Duration="0:0:0.18"/>
-                                            <DoubleAnimation Storyboard.TargetName="tique" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.18"/>
+                                            <ColorAnimation Storyboard.TargetName="caixa"
+                                                            Storyboard.TargetProperty="Background.Color"
+                                                            To="#80FFFFFF"
+                                                            Duration="0:0:0.18"/>
+                                            <ColorAnimation Storyboard.TargetName="caixa"
+                                                            Storyboard.TargetProperty="BorderBrush.Color"
+                                                            To="#A190AE"
+                                                            Duration="0:0:0.18"/>
+                                            <DoubleAnimation Storyboard.TargetName="tique"
+                                                             Storyboard.TargetProperty="Opacity"
+                                                             To="0"
+                                                             Duration="0:0:0.18"/>
                                         </Storyboard>
                                     </BeginStoryboard>
                                 </Trigger.ExitActions>
@@ -165,22 +260,34 @@
 
         <!-- CAMPO DE TEXTO arredondado - tarefa e subtarefa.
              NÃO tem padding na borda de dentro, o textbox aplica sozinho -->
-        <Style x:Key="CampoTexto" TargetType="TextBox">
-            <Setter Property="FontSize" Value="15"/>
-            <Setter Property="Foreground" Value="{StaticResource CorTitulo}"/>
-            <Setter Property="CaretBrush" Value="{StaticResource CorDestaque}"/>
-            <Setter Property="Padding" Value="12,9"/>
+        <Style x:Key="CampoTexto"
+               TargetType="TextBox">
+            <Setter Property="FontSize"
+                    Value="15"/>
+            <Setter Property="Foreground"
+                    Value="{StaticResource CorTitulo}"/>
+            <Setter Property="CaretBrush"
+                    Value="{StaticResource CorDestaque}"/>
+            <Setter Property="Padding"
+                    Value="12,9"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="TextBox">
-                        <Border x:Name="borda" Background="#E6FFFFFF" BorderBrush="{StaticResource CorLinha}"
-                                BorderThickness="1" CornerRadius="12">
-                            <ScrollViewer x:Name="PART_ContentHost" VerticalAlignment="Center"/>
+                        <Border x:Name="borda"
+                                Background="#E6FFFFFF"
+                                BorderBrush="{StaticResource CorLinha}"
+                                BorderThickness="1"
+                                CornerRadius="12">
+                            <ScrollViewer x:Name="PART_ContentHost"
+                                          VerticalAlignment="Center"/>
                         </Border>
                         <ControlTemplate.Triggers>
                             <!-- borda roxa quando o campo está com o cursor -->
-                            <Trigger Property="IsKeyboardFocused" Value="True">
-                                <Setter TargetName="borda" Property="BorderBrush" Value="{StaticResource CorDestaque}"/>
+                            <Trigger Property="IsKeyboardFocused"
+                                     Value="True">
+                                <Setter TargetName="borda"
+                                        Property="BorderBrush"
+                                        Value="{StaticResource CorDestaque}"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -190,23 +297,35 @@
 
         <!-- TEXTO EDITÁVEL da tarefa/subtarefa - dá pra clicar e editar.
              ganha um sublinhado fininho quando você está editando. -->
-        <Style x:Key="TextoEditavel" TargetType="TextBox">
-            <Setter Property="FontSize" Value="15"/>
-            <Setter Property="Foreground" Value="{StaticResource CorTitulo}"/>
-            <Setter Property="CaretBrush" Value="{StaticResource CorDestaque}"/>
-            <Setter Property="TextWrapping" Value="Wrap"/>
-            <Setter Property="Padding" Value="0,3"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
+        <Style x:Key="TextoEditavel"
+               TargetType="TextBox">
+            <Setter Property="FontSize"
+                    Value="15"/>
+            <Setter Property="Foreground"
+                    Value="{StaticResource CorTitulo}"/>
+            <Setter Property="CaretBrush"
+                    Value="{StaticResource CorDestaque}"/>
+            <Setter Property="TextWrapping"
+                    Value="Wrap"/>
+            <Setter Property="Padding"
+                    Value="0,3"/>
+            <Setter Property="VerticalAlignment"
+                    Value="Center"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="TextBox">
-                        <Border x:Name="borda" Background="Transparent" BorderBrush="Transparent"
+                        <Border x:Name="borda"
+                                Background="Transparent"
+                                BorderBrush="Transparent"
                                 BorderThickness="0,0,0,1">
                             <ScrollViewer x:Name="PART_ContentHost"/>
                         </Border>
                         <ControlTemplate.Triggers>
-                            <Trigger Property="IsKeyboardFocused" Value="True">
-                                <Setter TargetName="borda" Property="BorderBrush" Value="{StaticResource CorDestaque}"/>
+                            <Trigger Property="IsKeyboardFocused"
+                                     Value="True">
+                                <Setter TargetName="borda"
+                                        Property="BorderBrush"
+                                        Value="{StaticResource CorDestaque}"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -214,19 +333,25 @@
             </Setter>
             <Style.Triggers>
                 <!-- quando o item está concluído: riscado e esmaecido, com transição -->
-                <DataTrigger Binding="{Binding Feito}" Value="True">
-                    <Setter Property="TextDecorations" Value="Strikethrough"/>
+                <DataTrigger Binding="{Binding Feito}"
+                             Value="True">
+                    <Setter Property="TextDecorations"
+                            Value="Strikethrough"/>
                     <DataTrigger.EnterActions>
                         <BeginStoryboard>
                             <Storyboard>
-                                <DoubleAnimation Storyboard.TargetProperty="Opacity" To="0.5" Duration="0:0:0.2"/>
+                                <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                 To="0.5"
+                                                 Duration="0:0:0.2"/>
                             </Storyboard>
                         </BeginStoryboard>
                     </DataTrigger.EnterActions>
                     <DataTrigger.ExitActions>
                         <BeginStoryboard>
                             <Storyboard>
-                                <DoubleAnimation Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.2"/>
+                                <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                 To="1"
+                                                 Duration="0:0:0.2"/>
                             </Storyboard>
                         </BeginStoryboard>
                     </DataTrigger.ExitActions>
@@ -236,10 +361,16 @@
     </Window.Resources>
 
     <!-- CARTÃO PRINCIPAL - Janela principal -->
-    <Border CornerRadius="18" Margin="12" Background="{StaticResource CorFundo}"
-            BorderBrush="{StaticResource CorBorda}" BorderThickness="1">
+    <Border CornerRadius="18"
+            Margin="12"
+            Background="{StaticResource CorFundo}"
+            BorderBrush="{StaticResource CorBorda}"
+            BorderThickness="1">
         <Border.Effect>
-            <DropShadowEffect BlurRadius="20" ShadowDepth="4" Opacity="0.18" Color="#30233F"/>
+            <DropShadowEffect BlurRadius="20"
+                              ShadowDepth="4"
+                              Opacity="0.18"
+                              Color="#30233F"/>
         </Border.Effect>
 
         <Grid Margin="20">
@@ -251,34 +382,53 @@
             </Grid.RowDefinitions>
 
             <!--  Cabeçalho: título, data e botão de fechar  -->
-            <Grid Grid.Row="0" Margin="0,0,0,14" Background="Transparent"
+            <Grid Grid.Row="0"
+                  Margin="0,0,0,14"
+                  Background="Transparent"
                   MouseLeftButtonDown="Cabecalho_MouseDown">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 <StackPanel>
-                    <TextBlock Text="Meu dia" FontSize="28" FontWeight="SemiBold"
+                    <TextBlock Text="Meu dia"
+                               FontSize="28"
+                               FontWeight="SemiBold"
                                Foreground="{StaticResource CorTitulo}"/>
-                    <TextBlock x:Name="TxtData" FontSize="14" Margin="0,2,0,0"
+                    <TextBlock x:Name="TxtData"
+                               FontSize="14"
+                               Margin="0,2,0,0"
                                Foreground="{StaticResource CorTextoSuave}"/>
                 </StackPanel>
-                <Button Grid.Column="1" VerticalAlignment="Top" Style="{StaticResource BotaoIcone}"
-                        Content="&#xE8BB;" ToolTip="Fechar" Click="BtnFechar_Click"/>
+                <Button Grid.Column="1"
+                        VerticalAlignment="Top"
+                        Style="{StaticResource BotaoIcone}"
+                        Content="&#xE8BB;"
+                        ToolTip="Fechar"
+                        Click="BtnFechar_Click"/>
             </Grid>
 
             <!--  Lista de tarefas  -->
             <!-- CanContentScroll="False" = rola por pixel (suave), e não de item em item -->
-            <ListBox Grid.Row="1" x:Name="ListaTarefas" HorizontalContentAlignment="Stretch"
-                     Background="Transparent" BorderThickness="0"
+            <ListBox Grid.Row="1"
+                     x:Name="ListaTarefas"
+                     HorizontalContentAlignment="Stretch"
+                     AllowDrop="True"
+                     PreviewMouseLeftButtonDown="Lista_PreviewMouseLeftButtonDown"
+                     PreviewMouseMove="Lista_PreviewMouseMove"
+                     DragOver="Lista_DragOver"
+                     Background="Transparent"
+                     BorderThickness="0"
                      ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                      ScrollViewer.CanContentScroll="False">
 
                 <!-- Tira o destaque azul de seleção e permite o item encolher ao excluir -->
                 <ListBox.ItemContainerStyle>
                     <Style TargetType="ListBoxItem">
-                        <Setter Property="Focusable" Value="False"/>
-                        <Setter Property="ClipToBounds" Value="True"/>
+                        <Setter Property="Focusable"
+                                Value="False"/>
+                        <Setter Property="ClipToBounds"
+                                Value="True"/>
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="ListBoxItem">
@@ -292,57 +442,90 @@
                 <!-- Molde de CADA tarefa -->
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <Border Margin="0,0,0,8" Padding="12,8" CornerRadius="14" BorderThickness="1">
+                        <Border Margin="0,0,0,8"
+                                Padding="12,8"
+                                CornerRadius="14"
+                                BorderThickness="1">
                             <!-- Cartão fica mais claro e com borda quando está aberto (setinha marcada) -->
                             <Border.Style>
                                 <Style TargetType="Border">
-                                    <Setter Property="Background" Value="{StaticResource CorCartao}"/>
-                                    <Setter Property="BorderBrush" Value="Transparent"/>
+                                    <Setter Property="Background"
+                                            Value="{StaticResource CorCartao}"/>
+                                    <Setter Property="BorderBrush"
+                                            Value="Transparent"/>
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding IsChecked, ElementName=tgl}" Value="True">
-                                            <Setter Property="Background" Value="{StaticResource CorCartaoAberto}"/>
-                                            <Setter Property="BorderBrush" Value="{StaticResource CorLinha}"/>
+                                        <DataTrigger Binding="{Binding IsChecked, ElementName=tgl}"
+                                                     Value="True">
+                                            <Setter Property="Background"
+                                                    Value="{StaticResource CorCartaoAberto}"/>
+                                            <Setter Property="BorderBrush"
+                                                    Value="{StaticResource CorLinha}"/>
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
                             </Border.Style>
 
                             <StackPanel>
-                                <!-- linha principal: [caixinha] [nome editável] [setinha] [lixeira] -->
+                                <!-- Linha principal: [alça] [caixinha] [nome editável] [setinha] [lixeira] -->
                                 <Grid>
                                     <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
                                         <ColumnDefinition Width="Auto"/>
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="Auto"/>
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
 
+                                    <!-- alça: segure e arraste para mudar a ordem da tarefa -->
+                                    <TextBlock Text="&#x283F;"
+                                            FontSize="16"
+                                            Margin="-4,0,6,0"
+                                            VerticalAlignment="Center"
+                                               Background="Transparent"
+                                            Cursor="SizeAll"
+                                            Opacity="0.7"
+                                               Foreground="{StaticResource CorTextoSuave}"
+                                               ToolTip="Arraste para mudar a ordem"/>
+
                                     <!-- concluir a tarefa: SÓ pela caixinha -->
-                                    <CheckBox Style="{StaticResource CaixaMarcar}"
-                                              IsChecked="{Binding Feito}" Click="Chk_Click"/>
+                                    <CheckBox Grid.Column="1"
+                                            Style="{StaticResource CaixaMarcar}"
+                                              IsChecked="{Binding Feito}"
+                                            Click="Chk_Click"/>
 
                                     <!-- nome da tarefa: clique para editar (Enter confirma, Esc cancela) -->
-                                    <TextBox Grid.Column="1" Style="{StaticResource TextoEditavel}"
+                                    <TextBox Grid.Column="2"
+                                            Style="{StaticResource TextoEditavel}"
                                              Margin="12,0,6,0"
                                              Text="{Binding Texto, UpdateSourceTrigger=Explicit}"
                                              KeyDown="TextoEditavel_KeyDown"
                                              LostKeyboardFocus="TextoEditavel_LostKeyboardFocus"/>
 
-                                    <ToggleButton x:Name="tgl" Grid.Column="2" Style="{StaticResource BotaoSetinha}"
-                                                  IsChecked="{Binding Expandida}" Click="Chk_Click"
+                                    <ToggleButton x:Name="tgl"
+                                            Grid.Column="3"
+                                            Style="{StaticResource BotaoSetinha}"
+                                                  IsChecked="{Binding Expandida}"
+                                            Click="Chk_Click"
                                                   ToolTip="Mostrar/esconder subtarefas"/>
-                                    <Button Grid.Column="3" Style="{StaticResource BotaoIcone}" Content="&#xE74D;"
-                                            Tag="{Binding}" Click="BtnApagar_Click" ToolTip="Excluir tarefa"/>
+                                    <Button Grid.Column="4"
+                                            Style="{StaticResource BotaoIcone}"
+                                            Content="&#xE74D;"
+                                            Tag="{Binding}"
+                                            Click="BtnApagar_Click"
+                                            ToolTip="Excluir tarefa"/>
                                 </Grid>
 
                                 <!-- área das subtarefas: só aparece com a setinha aberta -->
                                 <StackPanel Margin="32,6,0,2">
                                     <StackPanel.Style>
                                         <Style TargetType="StackPanel">
-                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Setter Property="Visibility"
+                                                    Value="Collapsed"/>
                                             <Style.Triggers>
-                                                <DataTrigger Binding="{Binding IsChecked, ElementName=tgl}" Value="True">
-                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                <DataTrigger Binding="{Binding IsChecked, ElementName=tgl}"
+                                                             Value="True">
+                                                    <Setter Property="Visibility"
+                                                            Value="Visible"/>
                                                 </DataTrigger>
                                             </Style.Triggers>
                                         </Style>
@@ -353,22 +536,31 @@
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
                                                 <!-- clipToBounds: permite a linha encolher ao excluir -->
-                                                <Grid Margin="0,4" ClipToBounds="True">
+                                                <Grid Margin="0,4"
+                                                      ClipToBounds="True">
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="Auto"/>
                                                         <ColumnDefinition Width="*"/>
                                                         <ColumnDefinition Width="Auto"/>
                                                     </Grid.ColumnDefinitions>
                                                     <CheckBox Style="{StaticResource CaixaMarcar}"
-                                                              IsChecked="{Binding Feito}" Click="Chk_Click"/>
-                                                    <TextBox Grid.Column="1" Style="{StaticResource TextoEditavel}"
-                                                             FontSize="14" Margin="12,0,6,0"
+                                                              IsChecked="{Binding Feito}"
+                                                              Click="Chk_Click"/>
+                                                    <TextBox Grid.Column="1"
+                                                             Style="{StaticResource TextoEditavel}"
+                                                             FontSize="14"
+                                                             Margin="12,0,6,0"
                                                              Text="{Binding Texto, UpdateSourceTrigger=Explicit}"
                                                              KeyDown="TextoEditavel_KeyDown"
                                                              LostKeyboardFocus="TextoEditavel_LostKeyboardFocus"/>
-                                                    <Button Grid.Column="2" Style="{StaticResource BotaoIcone}"
-                                                            Width="26" Height="26" FontSize="13" Content="&#xE74D;"
-                                                            Tag="{Binding}" Click="BtnApagarSub_Click"
+                                                    <Button Grid.Column="2"
+                                                            Style="{StaticResource BotaoIcone}"
+                                                            Width="26"
+                                                            Height="26"
+                                                            FontSize="13"
+                                                            Content="&#xE74D;"
+                                                            Tag="{Binding}"
+                                                            Click="BtnApagarSub_Click"
                                                             ToolTip="Excluir subtarefa"/>
                                                 </Grid>
                                             </DataTemplate>
@@ -377,20 +569,28 @@
 
                                     <!-- campo para nova subtarefa (com texto-guia) -->
                                     <Grid Margin="0,6,0,0">
-                                        <TextBox x:Name="txtSub" Style="{StaticResource CampoTexto}"
-                                                 FontSize="14" Padding="12,7" Tag="{Binding}"
+                                        <TextBox x:Name="txtSub"
+                                                 Style="{StaticResource CampoTexto}"
+                                                 FontSize="14"
+                                                 Padding="12,7"
+                                                 Tag="{Binding}"
                                                  KeyDown="TxtSub_KeyDown"/>
                                         <!-- texto-guia: margem 13 = padding 12 + borda 1 (alinha com o cursor) -->
-                                        <TextBlock Text="Adicionar subtarefa (Enter)" FontSize="14"
+                                        <TextBlock Text="Adicionar subtarefa (Enter)"
+                                                   FontSize="14"
                                                    Foreground="{StaticResource CorTextoSuave}"
-                                                   Margin="13,0,0,0" VerticalAlignment="Center"
+                                                   Margin="13,0,0,4"
+                                                   VerticalAlignment="Center"
                                                    IsHitTestVisible="False">
                                             <TextBlock.Style>
                                                 <Style TargetType="TextBlock">
-                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                    <Setter Property="Visibility"
+                                                            Value="Collapsed"/>
                                                     <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding Text, ElementName=txtSub}" Value="">
-                                                            <Setter Property="Visibility" Value="Visible"/>
+                                                        <DataTrigger Binding="{Binding Text, ElementName=txtSub}"
+                                                                     Value="">
+                                                            <Setter Property="Visibility"
+                                                                    Value="Visible"/>
                                                         </DataTrigger>
                                                     </Style.Triggers>
                                                 </Style>
@@ -405,25 +605,36 @@
             </ListBox>
 
             <!--  campo de nova tarefa (rodapé)  -->
-            <Grid Grid.Row="2" Margin="0,10,0,0">
-                <TextBox x:Name="TxtNovo" Style="{StaticResource CampoTexto}"
-                         Padding="44,12,12,12" KeyDown="TxtNovo_KeyDown"/>
+            <Grid Grid.Row="2"
+                  Margin="0,10,0,0">
+                <TextBox x:Name="TxtNovo"
+                         Style="{StaticResource CampoTexto}"
+                         Padding="44,12,12,12"
+                         KeyDown="TxtNovo_KeyDown"/>
                 <!-- botão "+" por cima do campo, à esquerda -->
-                <Button Style="{StaticResource BotaoIcone}" Content="&#xE710;"
-                        HorizontalAlignment="Left" Margin="6,0,0,0"
+                <Button Style="{StaticResource BotaoIcone}"
+                        Content="&#xE710;"
+                        HorizontalAlignment="Left"
+                        Margin="6,0,0,0"
                         Foreground="{StaticResource CorDestaque}"
-                        Click="BtnAdicionar_Click" ToolTip="Adicionar tarefa"/>
+                        Click="BtnAdicionar_Click"
+                        ToolTip="Adicionar tarefa"/>
                 <!-- texto-guia: margem 45 = padding 44 + borda 1 (alinha com o cursor) -->
-                <TextBlock Text="Adicionar uma tarefa" FontSize="15"
+                <TextBlock Text="Adicionar uma tarefa"
+                           FontSize="15"
                            Foreground="{StaticResource CorTextoSuave}"
-                           Margin="45,0,0,0" VerticalAlignment="Center"
+                           Margin="45,0,0,4"
+                           VerticalAlignment="Center"
                            IsHitTestVisible="False">
                     <TextBlock.Style>
                         <Style TargetType="TextBlock">
-                            <Setter Property="Visibility" Value="Collapsed"/>
+                            <Setter Property="Visibility"
+                                    Value="Collapsed"/>
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding Text, ElementName=TxtNovo}" Value="">
-                                    <Setter Property="Visibility" Value="Visible"/>
+                                <DataTrigger Binding="{Binding Text, ElementName=TxtNovo}"
+                                             Value="">
+                                    <Setter Property="Visibility"
+                                            Value="Visible"/>
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
